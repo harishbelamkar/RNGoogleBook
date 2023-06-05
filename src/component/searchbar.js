@@ -12,7 +12,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SearchBar = ({ searchText, onSearch, onSubmit,onReset }) => {
 
-    console.log('Load searchbar--------->',searchText);
     return <View style={styles.container}>
 
         <Text style = {styles.searchIcon}>

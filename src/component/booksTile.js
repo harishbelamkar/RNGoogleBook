@@ -14,10 +14,7 @@ import {
 
 const BooksTile = ({ bookItem,bookPressed }) => {
 
-    // console.log('Load BooksTile--------->');
-    // console.log('Book Item:', bookItem);
     return (
-
         <View style={styles.container}>
             <TouchableOpacity
                 onPress={event => bookPressed(bookItem)}
@@ -40,17 +37,10 @@ const BooksTile = ({ bookItem,bookPressed }) => {
                         style = {styles.bookImageStyle}
 
                     />
-
-
                 </View>
 
-                <View
-                    style={{
-                        flex: 3,
-                        padding: 5,
-                    }}
-                >
-                    <Text>
+                <View style={styles.description}>
+                    <Text style = {styles.titleStyle}>
                         {bookItem.title}
                     </Text>
 
@@ -68,7 +58,7 @@ const BooksTile = ({ bookItem,bookPressed }) => {
 
                     {bookItem.publishedDate && (
                     <Text>
-                        publishedDate: {bookItem.publishedDate}
+                        Published Date: {bookItem.publishedDate}
                     </Text>
                     )}
                 </View>
@@ -89,5 +79,14 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         height: '100%',
         width: 80,
+    },
+    description: {
+        flex: 3,
+        padding: 5,
+    },
+    titleStyle: {
+        fontFamily: 'Zocial',
+        fontWeight: '800',
+        fontSize:16
     }
 });

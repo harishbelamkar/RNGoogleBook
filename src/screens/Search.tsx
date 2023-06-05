@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState, useId } from 'react';
-import NetInfo from "@react-native-community/netinfo";
+import React, { useCallback, useState } from 'react';
 
 import { ActivityIndicator, View, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -13,9 +12,6 @@ import {useNetInfo} from '../utility/useNetInfo'
 
 const SearchScreen = () => {
     const navigation = useNavigation();
-
-    console.log('SearchScreen!')
-
     const [listBooks, setListBooks] = useState < any > ([]);
     const [searchText, setSearchText] = useState < string > ('');
     const [loading, setLoading] = useState < boolean > (false);
@@ -24,25 +20,9 @@ const SearchScreen = () => {
     const [loadMoreBooks, setLoadMoreBooks] = useState < boolean > (true);
     const [isConnected] = useNetInfo();
 
-    // useEffect(() => {
-    //     // Subscribe
-    //     const unsubscribe = NetInfo.addEventListener((state) => {
-    //         setIsConnected(state.isConnected);
-    //         console.log("Connection type", state.type);
-    //     });
-    //     return () => {
-    //         unsubscribe();
-    //     };
-    // }, [])
-
-      useEffect(() => {
-        console.log("SearchScreen Connection type", isConnected);
-      },[isConnected])
-
-
     const fetchBooks = () => {
         const arrBooks: any = [];
-        let query = `?q=${searchText}&key=AIzaSyCkNAuBOzYRYbIyHsZCADAYor7qh3t3nWM&startIndex=${pageIndex}&maxResults=${AppConfig.pageLimit}`
+        let query = `?q=${searchText}&key=${AppConfig.apiKey}&startIndex=${pageIndex}&maxResults=${AppConfig.pageLimit}`
         const options = {
             method: "GET",
             headers: {
@@ -50,13 +30,11 @@ const SearchScreen = () => {
             }
         }
 
-        console.log('URL:', `${AppConfig.apiEndPoint}${query}`)
         setLoading(true);
         fetch(`${AppConfig.apiEndPoint}${query}`, options)
             .then(response => response.json())
             .then(responseData => {
                 const { items: books, totalItems, error } = responseData;
-                console.log('Response:', JSON.stringify(responseData));
                 if (error?.message) {
                     setErrorAPI(error?.message);
                 }
@@ -79,8 +57,6 @@ const SearchScreen = () => {
                         }
                         arrBooks.push(bookObject);
                     });
-                    console.log('listBooks:', listBooks.length);
-                    console.log('arrBooks:', arrBooks.length);
 
                     setListBooks([...listBooks, ...arrBooks]);
                     setPageIndex(pageIndex + AppConfig.pageLimit);
@@ -88,15 +64,12 @@ const SearchScreen = () => {
                 setLoading(false);
             })
             .catch(error => {
-                // handle the errors
-                console.log('error:', error);
                 setLoading(false);
                 setErrorAPI('Something wrong')
             })
     }
 
     const onSubmitClicked = () => {
-        console.log('submit clicked...');
         fetchBooks();
     }
 
@@ -118,12 +91,10 @@ const SearchScreen = () => {
 
 
     const onEndReachCallback = () => {
-        console.log('onEndReachCallback!')
         if (loadMoreBooks)
             fetchBooks();
     }
     const onResetClicked = () => {
-        console.log('onResetClicked');
         setSearchText('');
         setListBooks([])
         setPageIndex(1)
@@ -133,7 +104,7 @@ const SearchScreen = () => {
     }
 
     return (
-        <View style={{ backgroundColor: 'transparent', height: '100%' }}>
+        <View style={styles.container}>
             <SearchBar searchText={searchText}
                 onSearch={setSearchText}
                 onSubmit={onSubmitClicked}
@@ -145,13 +116,13 @@ const SearchScreen = () => {
             )}
 
             {errorAPI && (
-                <View style={{ height: '70%', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={styles.errorStyle}>
                     <ErrorMessage errormsg={errorAPI} />
                 </View>
             )}
 
             {!isConnected && (
-                <View style={{ height: '70%', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={styles.errorStyle}>
                 <ErrorMessage errormsg={'No Internet Connection!'} />
             </View>
             )}
@@ -159,7 +130,7 @@ const SearchScreen = () => {
 
 
             {(listBooks.length == 0 && errorAPI.length == 0) && (
-                <View style={{ height: '70%', backgroundColor:'transparent', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={styles.placeHolderStyle}>
                     <SearchPlaceHolder />
                 </View>
             )}
@@ -175,22 +146,9 @@ const SearchScreen = () => {
 }
 
 const styles = StyleSheet.create({
-    sectionContainer: {
-        marginTop: 32,
-        paddingHorizontal: 24,
-    },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-    },
-    sectionDescription: {
-        marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
-    },
-    highlight: {
-        fontWeight: '700',
-    },
+    container: { backgroundColor: 'transparent', height: '100%' },
+    errorStyle: { height: '70%', justifyContent: 'center', alignItems: 'center' },
+    placeHolderStyle: { height: '70%', backgroundColor:'transparent', justifyContent: 'center', alignItems: 'center' },
     bookTable: {
         backgroundColor: 'white',
         shadowColor: "#000",

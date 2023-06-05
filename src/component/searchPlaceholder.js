@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     placeHolderStyle: {
         textAlign:'center',
         fontSize: 22,
-        fontWeight: '500'
+        fontWeight: '500',
+        fontFamily: 'AntDesign',
     }
 });
 

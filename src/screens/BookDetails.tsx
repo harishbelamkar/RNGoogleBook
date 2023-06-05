@@ -1,21 +1,19 @@
 import { View, Image, StyleSheet, Text } from "react-native";
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { Rating } from 'react-native-ratings';
 
 const BookDetails = ({ route }) => {
-
     const { bookData } = route.params
-    console.log('bookData.ratingCount',bookData.ratingCount);
 
     return (
         <View>
-            <View style={{ margin: 5, borderRadius: 10 }}>
+            <View style={styles.imageContainer}>
             <Image
                 source={{ uri: bookData.thumbnail }}
                 resizeMode ={'stretch'}
                 style={styles.bookImageStyle}
             />
             </View>
-            <View style={{ margin: 4, backgroundColor: 'lightgray', borderRadius: 10 }}>
+            <View style={styles.description}>
                 <Text>Title: {bookData.title}</Text>
                 <Text>Sub Title: {bookData.subTitle}</Text>
                 <Text>Description: {bookData.description}</Text>
@@ -42,6 +40,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#E5E7E9',
         marginBottom: 10,
     },
+    imageContainer: { margin: 5, borderRadius: 10 },
+    description: { margin: 4, backgroundColor: 'lightgray', borderRadius: 10 },
     bookImageStyle: {
         borderRadius: 4,
         height: '60%',

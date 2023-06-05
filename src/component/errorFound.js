@@ -6,7 +6,6 @@ const ErrorMessage = ({errormsg}) => {
 
     return(
         <View style = {styles.container}>
-
             <Text style={styles.placeHolderStyle}>
                 {errormsg}
             </Text>
@@ -26,7 +25,6 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '500'
     }
-   
 });
 
 export default ErrorMessage;

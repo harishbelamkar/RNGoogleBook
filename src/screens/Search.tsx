@@ -22,7 +22,7 @@ const SearchScreen = () => {
 
     const fetchBooks = () => {
         const arrBooks: any = [];
-        let query = `?q=${searchText}&key=${AppConfig.apiKey}&startIndex=${pageIndex}&maxResults=${AppConfig.pageLimit}`
+        let googleApi = `${AppConfig.apiEndPoint}?q=${searchText}&key=${AppConfig.apiKey}&startIndex=${pageIndex}&maxResults=${AppConfig.pageLimit}`
         const options = {
             method: "GET",
             headers: {
@@ -30,8 +30,14 @@ const SearchScreen = () => {
             }
         }
 
+        console.log("URL",AppConfig.apiEndPoint);
+        console.log("Key",AppConfig.apiKey);
+        console.log("pageLimit",AppConfig.pageLimit);
+        console.log("ImageNotfound",AppConfig.imageNotFound);
+
+        console.log('URL:',googleApi)
         setLoading(true);
-        fetch(`${AppConfig.apiEndPoint}${query}`, options)
+        fetch(googleApi, options)
             .then(response => response.json())
             .then(responseData => {
                 const { items: books, totalItems, error } = responseData;

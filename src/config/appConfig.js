@@ -1,8 +1,15 @@
+import { 
+  GOOGLE_API,
+  IMAGE_NOT_FOUND,
+  PAGE_LIMIT,
+  GOOGLE_API_KEY
+ } from '@env'
+
 const AppConfig = {
-    apiEndPoint: 'https://www.googleapis.com/books/v1/volumes',
-    imageNotFound: 'https://i.ibb.co/YLC0nQQ/not-found.png',
-    pageLimit: 20,
-    apiKey: 'AIzaSyCkNAuBOzYRYbIyHsZCADAYor7qh3t3nWM'
+    apiEndPoint: GOOGLE_API,
+    imageNotFound: IMAGE_NOT_FOUND,
+    pageLimit: PAGE_LIMIT,
+    apiKey: GOOGLE_API_KEY
   };
   
   export default AppConfig;

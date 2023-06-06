@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontSize: 22,
         fontWeight: '500',
-        fontFamily: 'AntDesign',
+        fontFamily: 'Zocial',
     }
 });
 

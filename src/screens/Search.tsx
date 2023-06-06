@@ -10,6 +10,7 @@ import BooksTile from '../component/booksTile';
 import AppConfig from '../config/appConfig';
 import {useNetInfo} from '../utility/useNetInfo'
 
+var pageLimit = 20;
 const SearchScreen = () => {
     const navigation = useNavigation();
     const [listBooks, setListBooks] = useState < any > ([]);
@@ -22,7 +23,7 @@ const SearchScreen = () => {
 
     const fetchBooks = () => {
         const arrBooks: any = [];
-        let googleApi = `${AppConfig.apiEndPoint}?q=${searchText}&key=${AppConfig.apiKey}&startIndex=${pageIndex}&maxResults=${AppConfig.pageLimit}`
+        let googleApi = `${AppConfig.apiEndPoint}?q=${searchText}&key=${AppConfig.apiKey}&startIndex=${pageIndex}&maxResults=${pageLimit}`
         const options = {
             method: "GET",
             headers: {
@@ -35,6 +36,7 @@ const SearchScreen = () => {
             .then(response => response.json())
             .then(responseData => {
                 const { items: books, totalItems, error } = responseData;
+
                 if (error?.message) {
                     setErrorAPI(error?.message);
                 }
@@ -59,7 +61,7 @@ const SearchScreen = () => {
                     });
 
                     setListBooks([...listBooks, ...arrBooks]);
-                    setPageIndex(pageIndex + AppConfig.pageLimit);
+                    setPageIndex(pageIndex + pageLimit);
                 }
                 setLoading(false);
             })

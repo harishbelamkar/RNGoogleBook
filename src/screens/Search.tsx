@@ -30,12 +30,6 @@ const SearchScreen = () => {
             }
         }
 
-        console.log("URL",AppConfig.apiEndPoint);
-        console.log("Key",AppConfig.apiKey);
-        console.log("pageLimit",AppConfig.pageLimit);
-        console.log("ImageNotfound",AppConfig.imageNotFound);
-
-        console.log('URL:',googleApi)
         setLoading(true);
         fetch(googleApi, options)
             .then(response => response.json())

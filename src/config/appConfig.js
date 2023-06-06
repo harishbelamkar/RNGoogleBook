@@ -1,15 +1,8 @@
-import { 
-  GOOGLE_API,
-  IMAGE_NOT_FOUND,
-  PAGE_LIMIT,
-  GOOGLE_API_KEY
- } from '@env'
-
 const AppConfig = {
-    apiEndPoint: GOOGLE_API,
-    imageNotFound: IMAGE_NOT_FOUND,
-    pageLimit: PAGE_LIMIT,
-    apiKey: GOOGLE_API_KEY
+    apiEndPoint: process.env.REACT_APP_GOOGLE_API,
+    imageNotFound: process.env.REACT_APP_IMAGE_NOT_FOUND,
+    pageLimit: process.env.REACT_APP_PAGE_LIMIT,
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY
   };
   
   export default AppConfig;
